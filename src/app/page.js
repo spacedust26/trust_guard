@@ -74,7 +74,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-white text-black">
       {/* NAVBAR */}
       <header
-        className="shadow px-6 py-4 flex justify-between items-center sticky top-0 z-10"
+        className="shadow px-6 py-4 flex justify-between items-center sticky top-0 z-40"
         style={{
           backgroundColor: '#ffffff',
           opacity: 0.8,
@@ -86,34 +86,72 @@ export default function Home() {
           backgroundSize: '20px 20px',
         }}
       >
-        <h1 className="text-2xl font-bold tracking-tight">TrustGuard AI</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-black transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,0,0.8)]">
+          TRUSTGUARD AI
+        </h1>
         <input
           type="text"
           placeholder="Search products..."
           className="border rounded-lg px-4 py-2 text-sm w-1/2 bg-white/80 backdrop-blur-sm placeholder:text-gray-600"
         />
       </header>
+      <section
+        className="relative h-full w-full bg-slate-950 overflow-hidden
+    [background-image:radial-gradient(circle_500px_at_50%_200px,#3e3e3e,transparent)]"
+      >
 
-      {/* HERO SECTION */}
-      <section className="relative bg-[#f8f7f3] text-black px-6 sm:px-12 py-8 overflow-hidden">
-        <h1 className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(3rem,10vw,10rem)] font-extrabold tracking-tight text-black z-0 select-none uppercase">
+        {/* Background Heading */}
+        <h1 className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 
+    text-[clamp(3rem,10vw,10rem)] font-extrabold tracking-tight text-white z-10 
+    select-none uppercase drop-shadow-[2px_4px_4px_rgba(0,0,0,0.7)] transition-all duration-500">
           TRUSTGUARD
         </h1>
-        <div className="relative z-10 flex flex-col items-center justify-center text-center space-y-6">
+
+        {/* Top-right Sticker */}
+        <Image
+          src="/limited_time.gif"
+          alt="Sale Sticker Top Right"
+          width={250}
+          height={100}
+          className="absolute top-4 right-4 z-20 rotate-[2deg] 
+     w-[150px] sm:w-[180px] md:w-[220px] lg:w-[250px] 
+     transition-transform duration-500 
+     hover:scale-110"
+        />
+
+        {/* Bottom-left Sticker */}
+        <Image
+          src="/new.gif"
+          alt="Sale Sticker Bottom Left"
+          width={250}
+          height={100}
+          className="absolute bottom-35 left-6 z-20 -rotate-[15deg] 
+     w-[150px] sm:w-[180px] md:w-[220px] lg:w-[250px] 
+     transition-transform duration-500 
+     hover:scale-110"
+        />
+
+
+
+        {/* Foreground Content */}
+        <div className="relative z-30 flex flex-col items-center justify-center text-center space-y-6">
           <Image
             src="/model.png"
-            alt="Chair"
+            alt="Model"
             width={320}
             height={340}
-            className="rounded-2xl shadow-xl object-contain"
+            className="rounded-2xl shadow-xl object-contain transition-transform duration-500 hover:scale-110"
           />
 
-          <p className="max-w-xl text-gray-600 text-sm sm:text-base">
-            Our mission is to deliver bespoke furniture that’s purely made from wood and natural
-            supplies. Our products reflect modern minimalism with a touch of creativity.
+          <p className="max-w-2xl text-gray-400 text-sm sm:text-base">
+            <strong className="block text-white font-semibold mb-1">
+              Detect Fake. Spot Risk. Shop Smart.
+            </strong>
+            TrustGuard AI uses cutting-edge AI to analyze product listings, flag suspicious reviews, and detect potential fraud or counterfeits — empowering buyers with transparency and trust.
           </p>
 
-          <button className="inline-flex items-center gap-2 border border-black px-6 py- rounded-full text-sm font-semibold hover:bg-black hover:text-white transition">
+
+          <button className="inline-flex items-center gap-2 border border-black px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-black hover:text-white hover:scale-105">
             explore ⭢
           </button>
         </div>
@@ -123,19 +161,33 @@ export default function Home() {
       {/* MAIN CONTENT */}
       <main className="flex flex-1">
         {/* SIDEBAR FILTERS */}
-        <aside className="w-64 border rounded-2xl hidden md:block p-6 ml-5 mt-6 h-fit">
+        <aside
+          className="w-64 border rounded-2xl hidden md:block p-6 ml-5 mt-6 h-fit"
+          style={{
+            backgroundColor: '#ffffff',
+            opacity: 0.8,
+            backgroundImage: `
+      radial-gradient(circle, transparent 20%, #ffffff 20%, #ffffff 80%, transparent 80%, transparent),
+      radial-gradient(circle, transparent 20%, #ffffff 20%, #ffffff 80%, transparent 80%, transparent),
+      linear-gradient(#fcb9ff 2px, transparent 2px),
+      linear-gradient(90deg, #fcb9ff 2px, #ffffff 2px)
+    `,
+            backgroundPosition: '0 0, 25px 25px, 0 -1px, -1px 0',
+            backgroundSize: '50px 50px, 50px 50px, 25px 25px, 25px 25px',
+          }}
+        >
           <div className="flex items-center justify-between cursor-pointer mb-4" onClick={() => setFiltersOpen(!filtersOpen)}>
-            <h2 className="font-semibold text-lg">More Filters</h2>
+            <h2 className="font-semibold text-lg">Category</h2>
             <ChevronDownIcon className={`w-5 h-5 transform transition ${filtersOpen ? 'rotate-180' : ''}`} />
           </div>
           {filtersOpen && (
             <ul className="space-y-3 text-sm text-gray-700">
-              <li className="font-medium">+ Style Type</li>
-              <li className="font-medium">+ Sleeve</li>
-              <li className="font-medium">+ Closure Type</li>
-              <li className="font-medium">+ Pattern</li>
-              <li className="font-medium">+ Waistrise</li>
-              <li className="font-medium">+ Neckline</li>
+              <li className="font-medium border rounded-2xl bg-white p-3">+ Clothing</li>
+              <li className="font-medium border rounded-2xl bg-white p-3">+ Furniture</li>
+              <li className="font-medium border rounded-2xl bg-white p-3">+ Luggage</li>
+              <li className="font-medium border rounded-2xl bg-white p-3">+ Jewellery</li>
+              <li className="font-medium border rounded-2xl bg-white p-3">+ Electronics</li>
+              <li className="font-medium border rounded-2xl bg-white p-3">+ Home Decor</li>
             </ul>
           )}
         </aside>
@@ -192,9 +244,9 @@ export default function Home() {
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-gray-100 text-center text-sm py-4">
-        © 2025 AJIO Clone by You. All rights reserved.
+      <footer className="bg-[#f3edb3] text-center text-sm py-4">
+        © 2025 TRUSTGUARD AI. All rights reserved.
       </footer>
-    </div>
+    </div >
   );
 }
