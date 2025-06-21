@@ -17,7 +17,7 @@ export default function Navbar() {
       }}
     >
       <h1 className="text-2xl font-bold tracking-tight text-black transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,0,0.8)]">
-        TRUSTGUARD AI
+        SHOPGUARD AI
       </h1>
       <input
         type="text"

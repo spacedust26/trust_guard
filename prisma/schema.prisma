@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Product {
+  product_no             Int              @id
+  title                  String
+  category               String
+  average_rating         Float
+  rating_number          Int
+  description            String
+  price                  Float
+  seller                 String
+  details                Json
+  verified_product       Boolean
+  review_summary         String
+  fake_review_percentage Float
+
+  reviews     UserReview[]
+  variants    ProductVariant[]
+  thumbnails  ProductThumbnail[]
+  shipping    ShippingOption[]
+  sizes       ProductSize[]
+  reviewAnalyses ReviewAnalysis[]
+}
+
+model UserReview {
+  id                Int       @id @default(autoincrement())
+  rating            Float
+  title             String
+  text              String
+  product_no        Int
+  user_id           String
+  verified_purchase Boolean
+  helpful_vote      Int
+  legitimacy_score  Float
+  spam_flag         Boolean
+  ai_analysis       String
+  time              DateTime
+
+  product           Product     @relation(fields: [product_no], references: [product_no])
+  user              UserProfile @relation(fields: [user_id], references: [user_id])
+  analysis          ReviewAnalysis[]
+}
+
+model ProductThumbnail {
+  id         Int    @id @default(autoincrement())
+  product_no Int
+  url        String
+
+  product    Product @relation(fields: [product_no], references: [product_no])
+}
+
+model ShippingOption {
+  id         Int    @id @default(autoincrement())
+  product_no Int
+  label      String
+  value      String
+
+  product    Product @relation(fields: [product_no], references: [product_no])
+}
+
+model ProductSize {
+  id         Int    @id @default(autoincrement())
+  product_no Int
+  size       String
+
+  product    Product @relation(fields: [product_no], references: [product_no])
+}
+
+model UserProfile {
+  user_id       String  @id
+  username      String
+  join_date     DateTime
+  total_reviews Int
+  trust_score   Int
+
+  reviews       UserReview[]
+  reviewAnalyses ReviewAnalysis[]
+}
+
+model ReviewAnalysis {
+  review_id         Int      @id
+  user_id           String
+  product_no        Int
+  sentiment_score   Float
+  spam_probability  Float
+  keywords          String[]
+  flagged           Boolean
+  analysis_timestamp DateTime
+
+  review            UserReview  @relation(fields: [review_id], references: [id])
+  user              UserProfile @relation(fields: [user_id], references: [user_id])
+  product           Product     @relation(fields: [product_no], references: [product_no])
+}
+
+model ProductVariant {
+  variant_id     Int    @id @default(autoincrement())
+  product_no     Int
+  color          String?
+  size           String?
+  stock          Int
+  price_modifier Float
+
+  product        Product @relation(fields: [product_no], references: [product_no])
+}
+
+model Seller {
+  seller_id      String @id
+  seller_name    String
+  total_products Int
+  trust_score    Float
+  is_verified    Boolean
+}
